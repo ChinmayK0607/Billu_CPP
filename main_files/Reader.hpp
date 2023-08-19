@@ -4,7 +4,7 @@
 #include <string>
 #include <string_view>
 #include <vector>
-
+#include"types.hpp"
 //#include "types.hpp"
 
 class Tokenize {
@@ -152,6 +152,33 @@ private:
 
     std::string& m_input;
     size_t m_index{ 0 };
+};
+
+class Reader{
+public:
+    Reader(std::vector<std::string_view> &tokens) : m_tokens { tokens } { }
+
+    std::optional<std::string_view> next(){
+        if(m_index<m_input.size()){
+            return m_tokens.at(m_index++);
+        }
+        return{};
+    }
+    std::optional<std::string_view> peek(){
+        if(m_index<m_input.size()){
+            return m_tokens.at(m_index);
+        }
+        return {};
+    }
+
+private:
+    std::vector<std::string_view> &m_input;
+    size_t m_index{ 0 };
+std::vector<std::string_view> tokenize(std::string &input);
+Value *read_str(std::string &input)
+Value *read_form(Reader &read)
+Value *read_list(Reader &read)
+Value *read_atom(Reader &read)
 };
 
 /*
